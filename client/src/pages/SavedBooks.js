@@ -6,19 +6,22 @@ import { Jumbotron, Container, CardColumns, Card, Button } from 'react-bootstrap
 
 
 //QUERIES AND MUTATIONS
-import { useQuery, useMutation } from '@apollo/client';
+import { gql, useQuery, useMutation } from '@apollo/client';
 import { QUERY_ME } from '../utils/queries';
 import { REMOVE_BOOK } from '../utils/mutations';
 import { removeBookId } from '../utils/localStorage';
+
 
 import Auth from '../utils/auth';
 
 const SavedBooks = () => {
   const { loading, data } = useQuery(QUERY_ME);
   // eslint-disable-next-line
+  console.log(data)
   const [removeBook, { error }] = useMutation(REMOVE_BOOK);
-  const userData = data?.me || {};
-
+  let userData
+  userData = data?.me || {};
+  console.log(userData)
 
   // create function that accepts the book's mongo _id value as param and deletes the book from the database
   const handleDeleteBook = async (bookId) => {
@@ -54,8 +57,8 @@ const SavedBooks = () => {
       <Container>
         <h2>
           {userData.savedBooks?.length
-            ? `Viewing ${userData.savedBooks.length} saved ${
-                userData.savedBooks.length === 1 ? 'book' : 'books'
+            ? `Viewing ${userData.savedBooks?.length} saved ${
+                userData.savedBooks?.length === 1 ? 'book' : 'books'
               }:`
             : 'You have no saved books!'}
         </h2>

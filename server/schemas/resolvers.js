@@ -8,8 +8,9 @@ const resolvers = {
 Query: {
 //LOGIN and QUERY CURRENT USER
   me: async (parent, args, context) => {
+    console.log('QUERY me resolver ran')
     if (context.user) {
-      const userData = await User.findOne({ _id: context.user._id }).select('-__v -password');
+      const userData = await User.findOne({ _id: context.user._id }).select('-__v -password')
 
       return userData;
     }
@@ -47,6 +48,7 @@ Mutation: {
 
 // SAVE BOOK TO USER 
     saveBook: async (parent, { bookData }, context) => {
+      console.log('MUTATION saveBook ran')
         if (context.user) {
           const updatedUser = await User.findByIdAndUpdate(
             { _id: context.user._id },
@@ -60,6 +62,7 @@ Mutation: {
 
 //DELETE BOOK FROM USER
     removeBook: async (parent, { bookId }, context) => {
+      console.log('MUTATION removeBook ran')
         if (context.user) {
         const updatedUser = await User.findOneAndUpdate(
             { _id: context.user._id },
