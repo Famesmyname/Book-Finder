@@ -6,17 +6,17 @@ const resolvers = {
     
 //QUERIES
 Query: {
-
 //LOGIN and QUERY CURRENT USER
-    me: async (parent, args, context) => {
-      if (context.user) {
-        const userData = await User.findOne({ _id: context.user._id }).select('-__v -password');
+  me: async (parent, args, context) => {
+    if (context.user) {
+      const userData = await User.findOne({ _id: context.user._id }).select('-__v -password');
 
-        return userData;
-      }
-      throw new AuthenticationError('You were not logged in.');
-    },
+      return userData;
+    }
+
+    throw new AuthenticationError('Not logged in');
   },
+},
 
 //MUTATIONS
 Mutation: {
